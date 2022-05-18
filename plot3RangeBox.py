@@ -14,13 +14,15 @@ plt.subplots_adjust(bottom=0.4)
 x = []
 y = []
 
-ax_boxH = plt.axes([0.1, 0.19, 0.1, 0.07])
+plt.gcf().text(0.1, 0.20, "Select \nRange", fontsize = 10, weight = "bold")
+
+ax_boxH = plt.axes([0.3, 0.19, 0.1, 0.07])
 rangeBoxH = TextBox(ax_boxH, "Hours", initial = 0)
 
-ax_boxM = plt.axes([0.35, 0.19, 0.1, 0.07])
+ax_boxM = plt.axes([0.55, 0.19, 0.1, 0.07])
 rangeBoxM = TextBox(ax_boxM, "Minutes", initial = 0)
 
-ax_boxS = plt.axes([0.6, 0.19, 0.1, 0.07])
+ax_boxS = plt.axes([0.8, 0.19, 0.1, 0.07])
 rangeBoxS = TextBox(ax_boxS, "Seconds", initial = 10)
 
 
