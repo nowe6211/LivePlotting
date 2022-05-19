@@ -37,22 +37,26 @@ def animate(k):
     
     axs1.clear()
     
-    
-    
-    if rangeBoxH.text == "":
+    try: 
+        float(rangeBoxH.text)
+    except:
         hours = 0
     else:
         hours = float(rangeBoxH.text)
-    
-    if rangeBoxM.text == "":
+
+    try: 
+        float(rangeBoxM.text)
+    except:
         minutes = 0
     else:
         minutes = float(rangeBoxM.text)
 
-    if rangeBoxS.text == "":
-        minutes = 0
+    try: 
+        float(rangeBoxS.text)
+    except:
+        seconds = 0
     else:
-        seconds = float(rangeBoxS.text)
+        seconds = float(rangeBoxS.text)  
 
     range = seconds + 60*minutes + 3600*hours 
    
