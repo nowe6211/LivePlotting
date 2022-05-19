@@ -17,8 +17,16 @@ x = []
 y = []
 
 #creates range input box
-ax_box = plt.axes([0.1, 0.19, 0.8, 0.07])
-rangeBox = TextBox(ax_box, "range", initial = 10)
+plt.gcf().text(0.1, 0.20, "Select \nRange", fontsize = 10, weight = "bold")
+
+ax_boxH = plt.axes([0.3, 0.19, 0.1, 0.07])
+rangeBoxH = TextBox(ax_boxH, "Hours", initial = 0)
+
+ax_boxM = plt.axes([0.55, 0.19, 0.1, 0.07])
+rangeBoxM = TextBox(ax_boxM, "Minutes", initial = 0)
+
+ax_boxS = plt.axes([0.8, 0.19, 0.1, 0.07])
+rangeBoxS = TextBox(ax_boxS, "Seconds", initial = 10)
 
 #creates the pause button
 ax_Button = plt.axes([.1, 0.05, 0.8, 0.07])
@@ -33,18 +41,47 @@ def pausedPlot(event):
     plt.subplots_adjust(bottom=0.4)
 
     #allows widgets to remain operable after it is passed through the pause function
-    global ax_boxPaused
-    global rangeBoxPaused
+    global ax_boxHP
+    global rangeBoxHP
+    global ax_boxMP
+    global rangeBoxMP
+    global ax_boxSP
+    global rangeBoxSP
     
     #creates range input for paused plot
-    ax_boxPaused = plt.axes([0.1, 0.19, 0.8, 0.07])
-    rangeBoxPaused = TextBox(ax_boxPaused, "range", initial = 10)
+    plt.gcf().text(0.1, 0.20, "Select \nRange", fontsize = 10, weight = "bold")
 
+    ax_boxHP = plt.axes([0.3, 0.19, 0.1, 0.07])
+    rangeBoxHP = TextBox(ax_boxHP, "Hours", initial = 0)
+
+    ax_boxMP = plt.axes([0.55, 0.19, 0.1, 0.07])
+    rangeBoxMP = TextBox(ax_boxMP, "Minutes", initial = 0)
+
+    ax_boxSP = plt.axes([0.8, 0.19, 0.1, 0.07])
+    rangeBoxSP = TextBox(ax_boxSP, "Seconds", initial = 10)
     #sets range based off user intput to textbox, ensure the graph doesnt crash when box is empty
-    if rangeBoxPaused.text == "":
-        range2 = 1
+    try: 
+        float(rangeBoxHP.text)
+    except:
+        hoursP = 0
     else:
-        range2= float(rangeBoxPaused.text)
+        hoursP = float(rangeBoxHP.text)
+
+    try: 
+        float(rangeBoxMP.text)
+    except:
+        minutesP = 0
+    else:
+        minutesP = float(rangeBoxMP.text)
+
+    try: 
+        float(rangeBoxSP.text)
+    except:
+        secondsP = 0
+    else:
+        secondsP = float(rangeBoxSP.text)  
+
+    range2 = secondsP + 60*minutesP + 3600*hoursP
 
 
     #grabs just the data from when plot was paused
@@ -71,10 +108,30 @@ def pausedPlot(event):
 #redraws plot with new range
     def update(event):
         axs2.clear()
-        if rangeBoxPaused.text == "":
-            range2 = 1
+        try: 
+            float(rangeBoxHP.text)
+        except:
+            hoursP = 0
         else:
-            range2= float(rangeBoxPaused.text)
+            hoursP = float(rangeBoxHP.text)
+
+        try: 
+            float(rangeBoxMP.text)
+        except:
+            minutesP = 0
+        else:
+            minutesP = float(rangeBoxMP.text)
+
+        try: 
+            float(rangeBoxSP.text)
+        except:
+            secondsP = 0
+        else:
+            secondsP = float(rangeBoxSP.text)  
+
+        range2 = secondsP + 60*minutesP + 3600*hoursP
+
+
         i2=0
         j2=0
         if range2 < len(xP):
@@ -87,10 +144,12 @@ def pausedPlot(event):
         else:
             axs2.plot(xP[-i2:],yP[-i2:])
 
-    rangeBoxPaused.on_submit(update)
+    rangeBoxHP.on_submit(update)
+    rangeBoxMP.on_submit(update)
+    rangeBoxSP.on_submit(update)
 
     plt.show()
-    return fig2, axs2, rangeBoxPaused, ax_boxPaused
+    return fig2, axs2, rangeBoxHP,rangeBoxMP, rangeBoxSP, ax_boxHP, ax_boxMP, ax_boxSP
 
 rangeButton.on_clicked(pausedPlot)
 
@@ -104,13 +163,29 @@ def animate(k):
     
     axs1.clear()
     
-    if rangeBox.text == "":
-        range = 1
+    try: 
+        float(rangeBoxH.text)
+    except:
+        hours = 0
     else:
-        range = float(rangeBox.text)
+        hours = float(rangeBoxH.text)
 
+    try: 
+        float(rangeBoxM.text)
+    except:
+        minutes = 0
+    else:
+        minutes = float(rangeBoxM.text)
 
-   
+    try: 
+        float(rangeBoxS.text)
+    except:
+        seconds = 0
+    else:
+        seconds = float(rangeBoxS.text)  
+
+    range = seconds + 60*minutes + 3600*hours 
+
     i=0
     j=0
     if range < len(x):
